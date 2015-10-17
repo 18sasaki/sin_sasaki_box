@@ -1,0 +1,12 @@
+<div align='center'>
+    <h2>
+        <% if @artist %>
+            <%= @artist.name %>のページ
+        <% else %>
+            <font color='ff0000'>
+                ※まだ'<%= @new_name %>'は登録されていません。
+            </font>
+        <% end %>
+    </h2>
+</div>
+

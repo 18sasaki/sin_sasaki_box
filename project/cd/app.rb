@@ -8,106 +8,112 @@ get '/cd/' do
 end
 
 # artist
-get '/artists' do
+get '/cd/artists' do
   redirect '/artists/'
 end
 
-get '/artists/' do
+get '/cd/artists/' do
   erb :'cd/index'
 end
 
-post '/artists/create' do
+post '/cd/cd/artists/create' do
   Artists.new.insert_data(params)
   redirect "/artists/"
 end
 
-get '/:name' do |n|
-  @artist = Artists.find_by_name(params[:name])
-  erb :artist_show
+get '/cd/:name' do
+  if @artist = Artists.find_by_name(params[:name])
+    # erb :'cd/artist_show'
+    erb :'cd/dummy'
+  else
+    @new_name = params[:name]
+    # erb :'cd/artist_register'
+    erb :'cd/dummy'
+  end
 end
 
-get '/:name/edit' do
+get '/cd/:name/edit' do
   @artist = Artists.find_by_name(params[:name])
-  erb :artist_edit
+  erb :'cd/artist_edit'
 end
 
-post '/:name/update' do
+post '/cd/:name/update' do
   artists.find(params[:id]).insert_data(params)
   redirect "/artists/"
 end
 
-delete '/:name/del' do
+delete '/cd/:name/del' do
   artists.find(params[:id]).destroy
   redirect "/artists/"
 end
 
 
 # cd
-get '/:name/:title' do
+get '/cd/:name/:title' do
   redirect '/:name/:title/'
 end
 
-get '/:name/:title/' do
+get '/cd/:name/:title/' do
   @cd = Cds.find_by_name_and_title(params[:name], params[:title])
-  erb :cd_show
+  erb :'cd/cd_show'
 end
 
-get '/:name/register' do
+get '/cd/:name/register' do
   @artist = Artists.find_by_name(params[:name])
-  erb :cd_new
+  erb :'cd/cd_new'
 end
 
-post '/:name/register' do
+post '/cd/:name/register' do
   Cds.register(params)
   redirect "/#{params[:name]}/"
 end
 
-get '/:name/:title/edit' do
+get '/cd/:name/:title/edit' do
   @cd = Cds.find_by_name_and_title(params[:name], params[:title])
-  erb :cd_edit
+  erb :'cd/cd_edit'
 end
 
-post '/:name/:title/update' do
+post '/cd/:name/:title/update' do
   Cds.find_by_name_and_title(params[:name], params[:title]).insert_data(params)
   redirect "/#{params[:name]}/"
 end
 
-delete '/:name/:title/del' do
+delete '/cd/:name/:title/del' do
   Cds.find_by_name_and_title(params[:name], params[:title]).destroy
   redirect '/#{params[:name]}/'
 end
 
 
 # type
-get '/type' do
+get '/cd/type' do
   redirect '/type/'
 end
 
-get '/type/' do
+get '/cd/type/' do
   @types = Types.get_all
-  erb :type_index
+  erb :'cd/type_index'
 end
 
-get '/type/new' do
-  erb :type_new
+get '/cd/type/new' do
+  erb :'cd/type_new'
 end
 
-post '/type/create' do
+post '/cd/type/create' do
   Types.new.insert_data(params)
   redirect '/type/'
 end
 
-get '/type/edit' do
+get '/cd/type/edit' do
   @type = Types.find(params[:id])
-  erb :type_index
+  erb :'cd/type_index'
 end
 
-post '/type/update' do
+post '/cd/type/update' do
   Types.find(params[:id]).insert_data(params)
   redirect '/type/'
 end
 
-delete '/type/del' do
+delete '/cd/type/del' do
   Types.find(params[:id]).destroy
   redirect '/type/'
 end
