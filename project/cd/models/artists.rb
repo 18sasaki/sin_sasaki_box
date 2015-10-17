@@ -2,18 +2,11 @@
 class Artists < ActiveRecord::Base
   default_scope { order('name COLLATE "C"') } if ENV["RACK_ENV"] == "production"
 
-  # extend RaiseCatch
-
   Required = ['name', 'name_view', 'name_kana', 'rgb', 'sex', 'type_id']
 
-  # def self.find_by_name(params)
-  #   p ">>>>>>>>>>>>> GOOD!"
-  #   'horieyui'
-  # rescue => e
-  #   p ">>>>>>>>>>>>> error : #{e}"
-  #   @error = 'エラーが発生しました'
-  #   'エラーが発生しました'
-  # end
+  def self.get_all
+    Artists.all.order('name_kana')
+  end
 
   def insert_data(params)
     self.name      = params[:name]

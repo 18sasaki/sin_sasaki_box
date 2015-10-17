@@ -9,17 +9,24 @@ end
 
 # artist
 get '/cd/artists' do
-  redirect '/artists/'
+  redirect '/cd/artists/'
 end
 
 get '/cd/artists/' do
-  erb :'cd/index'
+  @artists = Artists.get_all
+  erb :'cd/artists'
 end
 
-post '/cd/cd/artists/create' do
-  Artists.new.insert_data(params)
-  redirect "/artists/"
+get '/cd/artist_register/:name?' do
+  erb :'cd/artist_register'
 end
+
+post '/cd/artist_register/' do
+  Artists.new.insert_data(params)
+  redirect "/cd/artists/"
+end
+
+# ↑ここまで見直し済み
 
 get '/cd/:name' do
   if @artist = Artists.find_by_name(params[:name])
@@ -39,18 +46,18 @@ end
 
 post '/cd/:name/update' do
   artists.find(params[:id]).insert_data(params)
-  redirect "/artists/"
+  redirect "/cd/artists/"
 end
 
 delete '/cd/:name/del' do
   artists.find(params[:id]).destroy
-  redirect "/artists/"
+  redirect "/cd/artists/"
 end
 
 
 # cd
 get '/cd/:name/:title' do
-  redirect '/:name/:title/'
+  redirect '/cd/:name/:title/'
 end
 
 get '/cd/:name/:title/' do
@@ -65,7 +72,7 @@ end
 
 post '/cd/:name/register' do
   Cds.register(params)
-  redirect "/#{params[:name]}/"
+  redirect "/cd/#{params[:name]}/"
 end
 
 get '/cd/:name/:title/edit' do
@@ -75,12 +82,12 @@ end
 
 post '/cd/:name/:title/update' do
   Cds.find_by_name_and_title(params[:name], params[:title]).insert_data(params)
-  redirect "/#{params[:name]}/"
+  redirect "/cd/#{params[:name]}/"
 end
 
 delete '/cd/:name/:title/del' do
   Cds.find_by_name_and_title(params[:name], params[:title]).destroy
-  redirect '/#{params[:name]}/'
+  redirect '/cd/#{params[:name]}/'
 end
 
 
@@ -100,7 +107,7 @@ end
 
 post '/cd/type/create' do
   Types.new.insert_data(params)
-  redirect '/type/'
+  redirect '/cd/type/'
 end
 
 get '/cd/type/edit' do
@@ -110,11 +117,20 @@ end
 
 post '/cd/type/update' do
   Types.find(params[:id]).insert_data(params)
-  redirect '/type/'
+  redirect '/cd/type/'
 end
 
 delete '/cd/type/del' do
   Types.find(params[:id]).destroy
-  redirect '/type/'
+  redirect '/cd/type/'
 end
 
+helpers do
+  def type_hash
+    { '0' => '', '1' => '声優', '2' => 'アニソン歌手', '3' => '声優ユニット' }
+  end
+
+  def type_translate(type_int)
+    type_hash[type_int.to_s]
+  end
+end

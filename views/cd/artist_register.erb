@@ -1,0 +1,48 @@
+<div align='center'>
+    <h2>声優CDデータ</h2>
+</div>
+
+<div id="register_div">
+    <form method="post">
+        <table class='table' style='width: auto;'>
+            <tr>
+                <th>名前</th>
+                <td><input type="text" name="name" value='<%= params[:name] %>' size='50'></td>
+            </tr>
+            <tr>
+                <th>カナ</th>
+                <td><input type="text" name="name_kana" size='50'></td>
+            </tr>
+            <tr>
+                <th>表示名</th>
+                <td><input type="text" name="name_view" size='50'></td>
+            </tr>
+            <tr>
+                <th>性別</th>
+                <td>
+                    <select name="sex">
+                      <% sex_hash.each_pair do |k,v| %>
+                        <%= "<option value='#{k}'>#{v}</option>" %>
+                      <% end %>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>種類</th>
+                <td>
+                    <select name="type_id">
+                      <% type_hash.each_pair do |k,v| %>
+                        <%= "<option value='#{k}'>#{v}</option>" %>
+                      <% end %>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>色</th>
+                <td><input type="text" name="rgb" size='20'></td>
+            </tr>
+        </table>
+        <input type="submit" class='btn btn-primary' value="登録">
+    </form>
+</div>
+
