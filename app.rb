@@ -5,6 +5,8 @@ require 'active_record'
 
 ActiveRecord::Base.establish_connection(ENV['DATABASE_URL'] || 'sqlite3://localhost/myapp.db')
 
+require_relative 'models/init'
+
 enable :sessions
 set :session_secret, '18sasaki'
 
