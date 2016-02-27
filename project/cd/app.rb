@@ -23,75 +23,66 @@ end
 
 post '/cd/artist_register/' do
   Artists.new.insert_data(params)
-  redirect "/cd/artists/"
+  redirect "/cd/#{params[:name]}"
+end
+
+get '/cd/:name' do
+  if @artist = Artists.find_by_name(params[:name])
+    @cds = Cds.where(artist_id: @artist).order('release_date')
+    erb :'cd/artist_show'
+  else
+    @new_name = params[:name]
+    erb :'cd/artist_register'
+  end
 end
 
 # ↑ここまで見直し済み
 
-get '/cd/:name' do
-  if @artist = Artists.find_by_name(params[:name])
-    # erb :'cd/artist_show'
-    erb :'cd/dummy'
-  else
-    @new_name = params[:name]
-    # erb :'cd/artist_register'
-    erb :'cd/dummy'
-  end
-end
-
+# アーティスト編集
 get '/cd/:name/edit' do
   @artist = Artists.find_by_name(params[:name])
   erb :'cd/artist_edit'
 end
 
+# アーティスト更新
 post '/cd/:name/update' do
   artists.find(params[:id]).insert_data(params)
   redirect "/cd/artists/"
 end
 
+# アーティスト削除
 delete '/cd/:name/del' do
   artists.find(params[:id]).destroy
   redirect "/cd/artists/"
 end
 
 
-# cd
-get '/cd/:name/:title' do
-  redirect '/cd/:name/:title/'
-end
-
-get '/cd/:name/:title/' do
-  @cd = Cds.find_by_name_and_title(params[:name], params[:title])
-  erb :'cd/cd_show'
-end
-
-get '/cd/:name/register' do
+# cd登録
+get '/cd/:name/add_cd' do
   @artist = Artists.find_by_name(params[:name])
-  erb :'cd/cd_new'
+  erb :'cd/add_cd'
 end
 
-post '/cd/:name/register' do
-  Cds.register(params)
-  redirect "/cd/#{params[:name]}/"
+post '/cd/:name/add_cd' do
+  Cds.new.insert_data(params)
+  redirect "/cd/#{ERB::Util.url_encode(params[:name])}"
 end
 
-get '/cd/:name/:title/edit' do
-  @cd = Cds.find_by_name_and_title(params[:name], params[:title])
-  erb :'cd/cd_edit'
+# cd編集
+post '/cd/:name/update_cd' do
+  Cds.find(params[:cd_id]).insert_data(params)
+  redirect "/cd/#{params[:name]}"
 end
 
-post '/cd/:name/:title/update' do
-  Cds.find_by_name_and_title(params[:name], params[:title]).insert_data(params)
-  redirect "/cd/#{params[:name]}/"
-end
-
-delete '/cd/:name/:title/del' do
-  Cds.find_by_name_and_title(params[:name], params[:title]).destroy
-  redirect '/cd/#{params[:name]}/'
+# cd削除
+delete '/cd/:name/del_cd' do
+  Cds.find(params[:cd_id]).destroy
+  redirect "/cd/#{params[:name]}"
 end
 
 
 # type
+# は、後回し
 get '/cd/type' do
   redirect '/type/'
 end

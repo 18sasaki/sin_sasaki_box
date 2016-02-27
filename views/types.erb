@@ -1,0 +1,22 @@
+<div align='center'>
+  <h2>タイプ管理画面</h2>
+</div>
+
+<table class="table table-condensed">
+  <tr>
+    <th>ID</th>
+    <th>key1</th>
+    <th>key2</th>
+    <th>表示名</th>
+  </tr>
+  <% @types.each do |type| %>
+      <tr>
+        <td><%= type.id %></td>
+        <td><%= type.key %></td>
+        <td><%= type.key %></td>
+        <td><%= type.view_name %></td>
+      </tr>
+  <% end %>
+</table>
+<!-- <a href='/cd/type_register/' class='btn btn-primary'>追加</a> -->
+

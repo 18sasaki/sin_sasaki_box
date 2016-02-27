@@ -1,0 +1,67 @@
+<div align='center'>
+    <h2>
+        <% if @artist %>
+            <%= @artist.name %>のページ
+        <% else %>
+            <font color='ff0000'>
+                ※まだ'<%= @new_name %>'は登録されていません。
+            </font>
+        <% end %>
+    </h2>
+</div>
+
+<table class="table table-condensed">
+  <tr>
+    <th>名前</th>
+    <td><%= @artist.name %>(<%= @artist.name_kana %>)</td>
+  </tr>
+  <tr>
+    <th>表示名</th>
+    <td><font color=<%= @artist.rgb %>><%= @artist.name_view %></font></td>
+  </tr>
+  <tr>
+    <th>性別</th>
+    <td><%= sex_translate(@artist.sex) %></td>
+  </tr>
+  <tr>
+    <th>種別</th>
+    <td><%= type_translate(@artist.type_id) %></td>
+  </tr>
+</table>
+
+<div name='cd_list'>
+    <% if @cds.present? %>
+        <font color='ff0000'>CD情報</font>
+        <table class="table table-condensed">
+          <tr>
+            <th>タイトル</th>
+            <th>タイプ</th>
+            <th>発売日</th>
+          </tr>
+          <% @cds.each do |cd| %>
+              <tr>
+                <td><%= cd.title %></td>
+                <td><%= cd.artist_id %></td>
+                <td><%= cd.release_date %></td>
+              </tr>
+          <% end %>
+        </table>
+        <a href="<%= @artist.name %>/add_cd" class='btn btn-primary'>追加するよ</a>
+    <% else %>
+        <a href="<%= @artist.name %>/add_cd" class='btn btn-primary'>追加しないと！</a>
+    <% end %>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
