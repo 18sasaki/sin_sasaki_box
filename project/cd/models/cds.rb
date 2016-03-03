@@ -11,7 +11,9 @@ class Cds < ActiveRecord::Base
   def insert_data(params)
     self.title        = params[:title]
     self.artist_id    = params[:artist_id]
-    self.type_id      = params[:type_id]
+    # self.type_id      = params[:type_id]
+    # 現時点では全部１にしておく
+    self.type_id      = 1
     self.release_date = params[:release_date]
     self.save
   end
