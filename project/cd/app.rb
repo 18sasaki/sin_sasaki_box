@@ -23,7 +23,7 @@ end
 
 post '/cd/artist_register/' do
   Artists.new.insert_data(params)
-  redirect "/cd/#{ERB::Util.url_encode(params[:name])}"
+  redirect "/cd/#{url_encode(params[:name])}"
 end
 
 get '/cd/:name' do
@@ -68,19 +68,19 @@ end
 
 post '/cd/:name/add_cd' do
   Cds.new.insert_data(params)
-  redirect "/cd/#{ERB::Util.url_encode(params[:name])}"
+  redirect "/cd/#{url_encode(params[:name])}"
 end
 
 # cd編集
 post '/cd/:name/update_cd' do
   Cds.find(params[:cd_id]).insert_data(params)
-  redirect "/cd/#{ERB::Util.url_encode(params[:name])}"
+  redirect "/cd/#{url_encode(params[:name])}"
 end
 
 # cd削除
 post '/cd/:name/del_cd' do
   Cds.find(params[:cd_id]).destroy
-  redirect "/cd/#{ERB::Util.url_encode(params[:name])}"
+  redirect "/cd/#{url_encode(params[:name])}"
 end
 
 
@@ -126,5 +126,9 @@ helpers do
 
   def type_translate(type_int)
     type_hash[type_int.to_s]
+  end
+
+  def url_encode(name)
+    ERB::Util.url_encode(name)
   end
 end
