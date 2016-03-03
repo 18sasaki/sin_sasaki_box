@@ -1,20 +1,9 @@
 <div align='center'>
-    <h2>
-        <% if @artist %>
-            <%= @artist.name %>のページ
-        <% else %>
-            <font color='ff0000'>
-                ※まだ'<%= @new_name %>'は登録されていません。
-            </font>
-        <% end %>
-    </h2>
+  <h2><%= @artist.name %>(<%= @artist.name_kana %>)</h2>
+  <a href='/cd/artist_register/' class='btn btn-sm btn-success'>編集</a>
 </div>
 
 <table class="table table-condensed">
-  <tr>
-    <th>名前</th>
-    <td><%= @artist.name %>(<%= @artist.name_kana %>)</td>
-  </tr>
   <tr>
     <th>表示名</th>
     <td><font color=<%= @artist.rgb %>><%= @artist.name_view %></font></td>
@@ -29,9 +18,12 @@
   </tr>
 </table>
 
+
+
 <div name='cd_list'>
     <% if @cds.present? %>
-        <font color='ff0000'>CD情報</font>
+        <h3>CD情報</h3>
+        <a href="<%= @artist.name %>/add_cd" class='btn btn-sm btn-warning'>CDの追加</a>
         <table class="table table-condensed">
           <tr>
             <th>タイトル</th>
@@ -51,22 +43,7 @@
               </tr>
           <% end %>
         </table>
-        <a href="<%= @artist.name %>/add_cd" class='btn btn-primary'>追加するよ</a>
     <% else %>
-        <a href="<%= @artist.name %>/add_cd" class='btn btn-primary'>追加しないと！</a>
+        <a href="<%= @artist.name %>/add_cd" class='btn btn-sm btn-warning'>CDを登録する</a>
     <% end %>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-

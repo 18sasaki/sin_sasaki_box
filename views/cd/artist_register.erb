@@ -1,5 +1,11 @@
 <div align='center'>
-    <h2>アーティスト登録</h2>
+    <h2>
+        <% if @new_name %>
+            「<%= @new_name %>」は未登録です。
+        <% else %>
+            アーティスト登録
+        <% end%>
+    </h2>
 </div>
 
 <div id="register_div">
@@ -42,7 +48,7 @@
                 <td><input type="text" name="rgb" size='20'></td>
             </tr>
         </table>
-        <input type="submit" class='btn btn-primary' value="登録">
+        <input type="submit" class='btn btn-success' value="登録">
     </form>
 </div>
 
