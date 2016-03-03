@@ -131,4 +131,8 @@ helpers do
   def url_encode(name)
     ERB::Util.url_encode(name)
   end
+
+  def header_path
+    :'cd/header'
+  end
 end
