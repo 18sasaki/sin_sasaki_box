@@ -2,6 +2,8 @@
     <h2>
         <% if @new_name %>
             「<%= @new_name %>」は未登録です。
+        <% elsif @artist %>
+            「<%= @artist.name %>」の編集
         <% else %>
             アーティスト登録
         <% end%>
@@ -10,6 +12,9 @@
 
 <div id="register_div">
     <form method="post">
+        <% if @artist %>
+            <input type="hidden" name="id" value='<%= @artist.id %>'>
+        <% end%>
         <table class='table' style='width: auto;'>
             <tr>
                 <th>名前</th>
@@ -17,18 +22,18 @@
             </tr>
             <tr>
                 <th>カナ</th>
-                <td><input type="text" name="name_kana" size='50'></td>
+                <td><input type="text" name="name_kana" value='<%= @artist && @artist.name_kana %>' size='50'></td>
             </tr>
             <tr>
                 <th>表示名</th>
-                <td><input type="text" name="name_view" size='50'></td>
+                <td><input type="text" name="name_view" value='<%= @artist && @artist.name_view %>' size='50'></td>
             </tr>
             <tr>
                 <th>性別</th>
                 <td>
                     <select name="sex">
                       <% sex_hash.each_pair do |k,v| %>
-                        <%= "<option value='#{k}'>#{v}</option>" %>
+                        <option value='<%= k %>' <%= "selected" if @artist && @artist.sex == k.to_i %>><%= v %></option>
                       <% end %>
                     </select>
                 </td>
@@ -38,17 +43,17 @@
                 <td>
                     <select name="type_id">
                       <% type_hash.each_pair do |k,v| %>
-                        <%= "<option value='#{k}'>#{v}</option>" %>
+                        <option value='<%= k %>' <%= "selected" if @artist && @artist.type_id == k.to_i %>><%= v %></option>
                       <% end %>
                     </select>
                 </td>
             </tr>
             <tr>
                 <th>色</th>
-                <td><input type="text" name="rgb" size='20'></td>
+                <td><input type="text" name="rgb" value='<%= @artist && @artist.rgb %>' size='20'></td>
             </tr>
         </table>
-        <input type="submit" class='btn btn-success' value="登録">
+        <input type="submit" class='btn btn-success' value=<%= @artist ? '編集' : '登録' %>>
     </form>
 </div>
 

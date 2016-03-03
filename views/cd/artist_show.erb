@@ -1,6 +1,6 @@
 <div align='center'>
   <h2><%= @artist.name %>(<%= @artist.name_kana %>)</h2>
-  <a href='/cd/artist_register/' class='btn btn-sm btn-success'>編集</a>
+  <a href="/cd/<%= params[:name] %>/edit" class='btn btn-sm btn-success'>編集</a>
 </div>
 
 <table class="table table-condensed">

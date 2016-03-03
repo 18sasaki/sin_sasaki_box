@@ -42,11 +42,11 @@ end
 # アーティスト編集
 get '/cd/:name/edit' do
   @artist = Artists.find_by_name(params[:name])
-  erb :'cd/artist_edit'
+  erb :'cd/artist_register'
 end
 
 # アーティスト更新
-post '/cd/:name/update' do
+post '/cd/:name/edit' do
   Artists.find(params[:id]).insert_data(params)
   redirect "/cd/artists/"
 end
