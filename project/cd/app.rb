@@ -23,12 +23,13 @@ end
 
 post '/cd/artist_register/' do
   Artists.new.insert_data(params)
-  redirect "/cd/#{params[:name]}"
+  redirect "/cd/#{ERB::Util.url_encode(params[:name])}"
 end
 
 get '/cd/:name' do
   if @artist = Artists.find_by_name(params[:name])
     @cds = Cds.where(artist_id: @artist).order('release_date')
+    # @cds = Cds.all
     erb :'cd/artist_show'
   else
     @new_name = params[:name]
@@ -46,13 +47,15 @@ end
 
 # アーティスト更新
 post '/cd/:name/update' do
-  artists.find(params[:id]).insert_data(params)
+  Artists.find(params[:id]).insert_data(params)
   redirect "/cd/artists/"
 end
 
 # アーティスト削除
-delete '/cd/:name/del' do
-  artists.find(params[:id]).destroy
+post '/cd/artists/del' do
+  # 該当アーティストのCDも全て消す
+  Cds.destroy(Cds.where(artist_id: params[:id]).pluck(:id))
+  Artists.find(params[:id]).destroy
   redirect "/cd/artists/"
 end
 
@@ -71,13 +74,13 @@ end
 # cd編集
 post '/cd/:name/update_cd' do
   Cds.find(params[:cd_id]).insert_data(params)
-  redirect "/cd/#{params[:name]}"
+  redirect "/cd/#{ERB::Util.url_encode(params[:name])}"
 end
 
 # cd削除
-delete '/cd/:name/del_cd' do
+post '/cd/:name/del_cd' do
   Cds.find(params[:cd_id]).destroy
-  redirect "/cd/#{params[:name]}"
+  redirect "/cd/#{ERB::Util.url_encode(params[:name])}"
 end
 
 

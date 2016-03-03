@@ -8,6 +8,7 @@
     <th>表示名</th>
     <th>性別</th>
     <th>タイプ</th>
+    <th>操作</th>
   </tr>
   <% @artists.each do |artist| %>
       <tr>
@@ -15,6 +16,12 @@
         <td><font color=<%= artist.rgb %>><%= artist.name_view %></font></td>
         <td><%= sex_translate(artist.sex) %></td>
         <td><%= type_translate(artist.type_id) %></td>
+        <td>
+          <form method="post" action="del">
+            <input type="submit" class='btn btn-xs btn-danger btn-md' value="削除" onClick="return DeleteCheck('<%= artist.name %>');">
+            <input type="hidden" name="id" value="<%= artist.id %>">
+          </form>
+        </td>
       </tr>
   <% end %>
 </table>
