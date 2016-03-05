@@ -83,6 +83,18 @@ post '/cd/:name/del_cd' do
   redirect "/cd/#{url_encode(params[:name])}"
 end
 
+# csvからのcd登録画面
+get '/cd/:name/csv' do
+  @artist = Artists.find_by_name(params[:name])
+  erb :'cd/csv'
+end
+
+# csvからのcd登録
+post '/cd/:name/csv' do
+  Cds.insert_from_csv(params)
+  redirect "/cd/#{url_encode(params[:name])}"
+end
+
 
 # type
 # は、後回し
