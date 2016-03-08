@@ -1,0 +1,14 @@
+<div align='center'>
+    <h2>
+        CSVからCD登録
+    </h2>
+</div>
+
+<div id="register_div">
+    <form method="post", enctype='multipart/form-data'>
+        <input type="hidden" name="artist_id" value='<%= @artist.id %>'>
+        <input type="file" name="csv" size='100'>
+        <input type="submit" class='btn btn-success' value='登録'>
+    </form>
+</div>
+
