@@ -18,33 +18,31 @@
   </tr>
 </table>
 
-
-
 <div name='cd_list'>
-    <% if @cds.present? %>
-        <h3>CD情報</h3>
-        <a href="<%= @artist.name %>/add_cd" class='btn btn-sm btn-warning'>CDの追加</a>
-        <table class="table table-condensed">
-          <tr>
-            <th>タイトル</th>
-            <th>発売日</th>
-            <th>操作</th>
-          </tr>
-          <% @cds.each do |cd| %>
-              <tr>
-                <td><%= cd.title %></td>
-                <td><%= cd.release_date %></td>
-                <td>
-                  <form method="post" action="<%= @artist.name %>/del_cd">
-                    <input type="submit" class='btn btn-xs btn-danger btn-md' value="削除" onClick="return DeleteCheck('<%= cd.title %>');">
-                    <input type="hidden" name="cd_id" value="<%= cd.id %>">
-                  </form>
-                </td>
-              </tr>
-          <% end %>
-        </table>
-    <% else %>
-        <a href="<%= @artist.name %>/add_cd" class='btn btn-sm btn-warning'>CDを登録する</a>
-        <a href="<%= @artist.name %>/csv" class='btn btn-sm btn-warning'>CSVからCDを登録する</a>
-    <% end %>
+  <h3>CD情報</h3>
+  <% if @cds.present? %>
+      <a href="<%= @artist.name %>/add_cd" class='btn btn-sm btn-warning'>CDの追加</a>
+      <table class="table table-condensed">
+        <tr>
+          <th>タイトル</th>
+          <th>発売日</th>
+          <th>操作</th>
+        </tr>
+        <% @cds.each do |cd| %>
+            <tr>
+              <td><%= cd.title %></td>
+              <td><%= cd.release_date %></td>
+              <td>
+                <form method="post" action="<%= @artist.name %>/del_cd">
+                  <input type="submit" class='btn btn-xs btn-danger btn-md' value="削除" onClick="return DeleteCheck('<%= cd.title %>');">
+                  <input type="hidden" name="cd_id" value="<%= cd.id %>">
+                </form>
+              </td>
+            </tr>
+        <% end %>
+      </table>
+  <% else %>
+      <a href="<%= @artist.name %>/add_cd" class='btn btn-sm btn-warning'>CDを登録する</a>
+      <a href="<%= @artist.name %>/csv" class='btn btn-sm btn-warning'>CSVからCDを登録する</a>
+  <% end %>
 </div>
