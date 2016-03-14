@@ -96,6 +96,24 @@ post '/cd/:name/csv' do
 end
 
 
+# グラフ設定
+#︎ もういきなり編集画面で良い
+get '/cd/g_config' do
+  redirect '/cd/g_config/'
+end
+
+get '/cd/g_config/' do
+  @g_config = GConfig.first
+  erb :'cd/g_config'
+end
+
+post '/cd/g_config/' do
+  # 一つだけなのでfirstを上書き
+  GConfigs.first.overwrite(params)
+  redirect "/cd/g_config"
+end
+
+
 # type
 # は、後回し
 get '/cd/type' do
