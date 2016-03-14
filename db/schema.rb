@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151011131831) do
+ActiveRecord::Schema.define(version: 20160314083033) do
 
   create_table "artists", force: true do |t|
     t.string  "name"
@@ -26,6 +26,14 @@ ActiveRecord::Schema.define(version: 20151011131831) do
     t.integer "artist_id"
     t.integer "type_id"
     t.date    "release_date"
+  end
+
+  create_table "g_configs", force: true do |t|
+    t.string  "artist_id_list"
+    t.integer "type_id"
+    t.date    "start_date"
+    t.date    "end_date"
+    t.integer "date_range"
   end
 
   create_table "types", force: true do |t|
