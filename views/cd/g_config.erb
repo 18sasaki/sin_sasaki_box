@@ -1,3 +1,18 @@
+<script type="text/javascript">
+<!--
+function changeForm() {
+  index = document.getElementById('g_config_type_select').selectedIndex;
+  if (index == 1){
+      $('#date_type_form').show();
+      $('#range_type_form').hide();
+  } else if (index == 2) {
+      $('#date_type_form').hide();
+      $('#range_type_form').show();
+  }
+}
+// -->
+</script>
+
 <div align='center'>
     <h2>グラフ設定</h2>
 </div>
@@ -28,12 +43,12 @@
 
 <div id="register_div">
     <h3>設定変更</h3>
-    <form method="post">
+    <form method="post" name='g_config_form'>
         <table class='table' style='width: auto;'>
             <tr>
                 <th>表示タイプ</th>
                 <td>
-                    <select name="type_id">
+                    <select name="type_id" id='g_config_type_select' onChange='changeForm()'>
                       <% g_config_hash.each_pair do |k,v| %>
                         <option value='<%= k %>' <%= "selected" if @g_config && @g_config.type_id == k.to_i %>><%= v %></option>
                       <% end %>
@@ -41,16 +56,14 @@
                 </td>
             </tr>
             <tr>
-                <th>表示開始日</th>
-                <td><input type="date" name="start_date" value='<%= @g_config && @g_config.start_date %>'></td>
-            </tr>
-            <tr>
-                <th>表示終了日</th>
-                <td><input type="date" name="end_date" value='<%= @g_config && @g_config.end_date %>'></td>
-            </tr>
-            <tr>
                 <th>表示期間</th>
-                <td><input type="text" name="date_range" value='<%= @g_config && @g_config.date_range %>' size='15'>日間</td>
+                <td id='date_type_form' <%= "style='display: none'" if @g_config.type_id != 1 %>>
+                    開始：<input type="date" name="start_date" value='<%= @g_config && @g_config.start_date %>'><br/>
+                    終了：<input type="date" name="end_date" value='<%= @g_config && @g_config.end_date %>'>
+                </td>
+                <td id='range_type_form' <%= "style='display: none'" if @g_config.type_id != 2 %>>
+                    <input type="text" name="date_range" value='<%= @g_config && @g_config.date_range %>' size='15'>日間
+                </td>
             </tr>
         </table>
         <input type="submit" class='btn btn-success' value=<%= @g_config ? '更新' : '登録' %>>
