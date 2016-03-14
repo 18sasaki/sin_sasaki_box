@@ -1,0 +1,58 @@
+<div align='center'>
+    <h2>グラフ設定</h2>
+</div>
+
+<% if @g_config %>
+    <table class="table table-condensed">
+        <tr>
+            <th>表示タイプ</th>
+            <td><%= g_config_translate(@g_config.type_id) %></td>
+        </tr>
+        <tr>
+            <th>表示期間</th>
+            <td>
+                <% if @g_config.type_id == 1 %>
+                    <%= format_date(@g_config.start_date) %> 〜 <%= format_date(@g_config.end_date) %>
+                <% else %>
+                    <%= @g_config.date_range %>日間
+                <% end %>
+            </td>
+        </tr>
+        <tr>
+            <th>表示アーティスト<br />（そのうち名前に変換）</th>
+            <td><%= @g_config.artist_id_list %></td>
+        </tr>
+    </table>
+<% end %>
+
+
+<div id="register_div">
+    <h3>設定変更</h3>
+    <form method="post">
+        <table class='table' style='width: auto;'>
+            <tr>
+                <th>表示タイプ</th>
+                <td>
+                    <select name="type_id">
+                      <% g_config_hash.each_pair do |k,v| %>
+                        <option value='<%= k %>' <%= "selected" if @g_config && @g_config.type_id == k.to_i %>><%= v %></option>
+                      <% end %>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>表示開始日</th>
+                <td><input type="date" name="start_date" value='<%= @g_config && @g_config.start_date %>'></td>
+            </tr>
+            <tr>
+                <th>表示終了日</th>
+                <td><input type="date" name="end_date" value='<%= @g_config && @g_config.end_date %>'></td>
+            </tr>
+            <tr>
+                <th>表示期間</th>
+                <td><input type="text" name="date_range" value='<%= @g_config && @g_config.date_range %>' size='15'>日間</td>
+            </tr>
+        </table>
+        <input type="submit" class='btn btn-success' value=<%= @g_config ? '更新' : '登録' %>>
+    </form>
+</div>

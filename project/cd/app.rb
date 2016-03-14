@@ -7,6 +7,26 @@ get '/cd/' do
   erb :'cd/index'
 end
 
+# グラフ設定
+# レンダリングの関係でこの位置。
+# 「g_config」ってアーティストが来たら死ぬ。
+#︎ もういきなり編集画面で良い
+get '/cd/g_config' do
+  redirect '/cd/g_config/'
+end
+
+get '/cd/g_config/' do
+  @g_config = GConfigs.first
+  erb :'cd/g_config'
+end
+
+post '/cd/g_config/' do
+  # 一つだけなのでfirstを上書き
+  (GConfigs.first || GConfigs.new).overwrite(params)
+  redirect "/cd/g_config"
+end
+
+
 # artist
 get '/cd/artists' do
   redirect '/cd/artists/'
@@ -96,24 +116,6 @@ post '/cd/:name/csv' do
 end
 
 
-# グラフ設定
-#︎ もういきなり編集画面で良い
-get '/cd/g_config' do
-  redirect '/cd/g_config/'
-end
-
-get '/cd/g_config/' do
-  @g_config = GConfig.first
-  erb :'cd/g_config'
-end
-
-post '/cd/g_config/' do
-  # 一つだけなのでfirstを上書き
-  GConfigs.first.overwrite(params)
-  redirect "/cd/g_config"
-end
-
-
 # type
 # は、後回し
 get '/cd/type' do
@@ -164,5 +166,17 @@ helpers do
 
   def header_path
     :'cd/header'
+  end
+
+  def g_config_hash
+    { '0' => '', '1' => 'リリース日付', '2' => 'リリース間隔' }
+  end
+
+  def g_config_translate(type_int)
+    g_config_hash[type_int.to_s]
+  end
+
+  def format_date(date)
+    date.strftime("%Y年%m月%d日")
   end
 end
